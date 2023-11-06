@@ -1,6 +1,7 @@
 package butvinm.web.lab1.core.points;
 
 import butvinm.web.lab1.core.points.models.Point;
+import lombok.val;
 
 /**
  *                  / \
@@ -19,29 +20,29 @@ import butvinm.web.lab1.core.points.models.Point;
  */
 public class CollisionChecker {
     public Boolean checkCollision(Point point, Float graphRadius) {
-        final var inCircle = checkCircle(point, graphRadius);
-        final var inRectangle = checkRectangle(point, graphRadius);
-        final var inTriangle = checkTriangle(point, graphRadius);
+        val inCircle = checkCircle(point, graphRadius);
+        val inRectangle = checkRectangle(point, graphRadius);
+        val inTriangle = checkTriangle(point, graphRadius);
         return inCircle || inRectangle || inTriangle;
     }
 
     private Boolean checkCircle(Point point, Float graphRadius) {
-        final var leftOp = point.x() * point.x() + point.y() * point.y();
+        val leftOp = point.x() * point.x() + point.y() * point.y();
         return leftOp <= graphRadius * graphRadius;
     }
 
     private Boolean checkRectangle(Point point, Float graphRadius) {
-        final var xUpperOY = point.x() >= 0;
-        final var xLower2R = point.x() <= 2 * graphRadius;
-        final var yUpperOX = point.y() >= 0;
-        final var yLower2R = point.y() <= 2 * graphRadius;
+        val xUpperOY = point.x() >= 0;
+        val xLower2R = point.x() <= 2 * graphRadius;
+        val yUpperOX = point.y() >= 0;
+        val yLower2R = point.y() <= 2 * graphRadius;
         return xUpperOY && xLower2R && yLower2R && yUpperOX;
     }
 
     private final Boolean checkTriangle(Point point, Float graphRadius) {
-        final var xLowerOY = point.x() <= 0;
-        final var yLowerOX = point.y() <= 0;
-        final var yUpperDiagonal = point.y() >= -point.x() - 2 * graphRadius;
+        val xLowerOY = point.x() <= 0;
+        val yLowerOX = point.y() <= 0;
+        val yUpperDiagonal = point.y() >= -point.x() - 2 * graphRadius;
         return xLowerOY && yLowerOX && yUpperDiagonal;
     }
 }

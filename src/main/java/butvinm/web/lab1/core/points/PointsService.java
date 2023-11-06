@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import butvinm.web.lab1.core.points.models.Collision;
 import butvinm.web.lab1.core.points.models.Point;
 import lombok.NonNull;
+import lombok.val;
 
 public class PointsService {
     private final CollisionChecker checker;
@@ -26,8 +27,8 @@ public class PointsService {
         Float y,
         Float graphRadius
     ) {
-        final var point = new Point(x, y);
-        final var collision = new Collision(
+        val point = new Point(x, y);
+        val collision = new Collision(
             point,
             graphRadius,
             checker.checkCollision(point, graphRadius),

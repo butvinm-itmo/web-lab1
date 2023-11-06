@@ -7,12 +7,13 @@ import butvinm.web.lab1.core.points.CollisionsRepo;
 import butvinm.web.lab1.providers.mongo.MongoCollisionsRepo;
 import jakarta.enterprise.context.Dependent;
 import jakarta.enterprise.inject.Produces;
+import lombok.val;
 
 @Dependent
 public class CollisionsRepoProvider {
     @Produces
     public CollisionsRepo getMongoRepo() {
-        final var client = MongoClients.create(Config.MONGODB_URL);
+        val client = MongoClients.create(Config.MONGODB_URL);
         return new MongoCollisionsRepo(client, Config.MONGODB_DATABASE);
     }
 }
