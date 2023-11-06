@@ -5,4 +5,4 @@ mvn-package:
 
 
 docker-dev: mvn-package
-	docker-compose up --build
+	docker-compose up --build; rm -rf ./target
