@@ -9,6 +9,7 @@ import com.mongodb.client.MongoDatabase;
 
 import butvinm.web.lab1.core.points.CollisionsRepo;
 import butvinm.web.lab1.core.points.models.Collision;
+import lombok.NonNull;
 
 public class MongoCollisionsRepo implements CollisionsRepo, Closeable {
     private final static String COLLECTION_NAME = "collisions";
@@ -17,6 +18,7 @@ public class MongoCollisionsRepo implements CollisionsRepo, Closeable {
     private final MongoDatabase database;
     private final MongoCollection<Collision> collection;
 
+    @NonNull
     public MongoCollisionsRepo(MongoClient client, String database) {
         this.client = client;
         this.database = this.client.getDatabase(database);

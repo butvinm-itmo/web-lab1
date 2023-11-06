@@ -2,10 +2,12 @@ package butvinm.web.lab1.core.points.models;
 
 import java.time.LocalDateTime;
 
+import lombok.NonNull;
+
 public record Collision(
-    Point point,
-    Float graphRadius,
-    Boolean collied,
-    LocalDateTime checkedAt
+    @NonNull Point point,
+    @NonNull Float graphRadius,
+    @NonNull Boolean collied,
+    @NonNull LocalDateTime checkedAt
 ) {
 }

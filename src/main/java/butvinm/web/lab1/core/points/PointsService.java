@@ -4,10 +4,12 @@ import java.time.LocalDateTime;
 
 import butvinm.web.lab1.core.points.models.Collision;
 import butvinm.web.lab1.core.points.models.Point;
+import lombok.NonNull;
 
 public class PointsService {
     private final CollisionsRepo repo;
 
+    @NonNull
     public PointsService(CollisionsRepo repo) {
         this.repo = repo;
     }

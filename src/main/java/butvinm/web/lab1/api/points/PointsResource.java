@@ -13,6 +13,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
+import lombok.NonNull;
 
 @Path("points")
 public class PointsResource {
@@ -28,9 +29,9 @@ public class PointsResource {
     @POST
     @Produces({ MediaType.APPLICATION_JSON })
     public Collision addCollision(
-        @QueryParam("x") Float x,
-        @QueryParam("y") Float y,
-        @QueryParam("radius") Float graphRadius
+        @QueryParam("x") @NonNull Float x,
+        @QueryParam("y") @NonNull Float y,
+        @QueryParam("radius") @NonNull Float graphRadius
     ) {
         return this.service.addCollision(x, y, graphRadius);
     }
