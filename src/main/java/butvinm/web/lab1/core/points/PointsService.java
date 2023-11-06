@@ -7,11 +7,14 @@ import butvinm.web.lab1.core.points.models.Point;
 import lombok.NonNull;
 
 public class PointsService {
+    private final CollisionChecker checker;
+
     private final CollisionsRepo repo;
 
     @NonNull
     public PointsService(CollisionsRepo repo) {
         this.repo = repo;
+        this.checker = new CollisionChecker();
     }
 
     public Iterable<Collision> getCollisions() {
@@ -23,10 +26,11 @@ public class PointsService {
         Float y,
         Float graphRadius
     ) {
+        final var point = new Point(x, y);
         final var collision = new Collision(
-            new Point(x, y),
+            point,
             graphRadius,
-            true,
+            checker.checkCollision(point, graphRadius),
             LocalDateTime.now()
         );
         this.repo.addCollision(collision);
