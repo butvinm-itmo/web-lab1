@@ -1,4 +1,4 @@
-package butvinm.web.lab1.api;
+package butvinm.web.lab1.api.validation;
 
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
@@ -7,15 +7,15 @@ import jakarta.ws.rs.ext.ExceptionMapper;
 import jakarta.ws.rs.ext.Provider;
 
 @Provider
-public class NullQueryParamsHandler
-    implements ExceptionMapper<NullPointerException> {
+public class ValidationHandler
+    implements ExceptionMapper<ValidationException> {
     @Context
     private HttpHeaders headers;
 
-    public Response toResponse(NullPointerException exception) {
+    public Response toResponse(ValidationException exception) {
         return Response
             .status(404)
-            .entity("Query validation error: " + exception.getMessage())
+            .entity(exception.getMessage())
             .build();
     }
 }

@@ -2,6 +2,8 @@ package butvinm.web.lab1.api.points;
 
 import java.util.List;
 
+import butvinm.web.lab1.api.validation.ValidationException;
+import butvinm.web.lab1.api.validation.Validator;
 import butvinm.web.lab1.core.points.PointsService;
 import butvinm.web.lab1.core.points.models.Collision;
 import butvinm.web.lab1.helpers.Iterables;
@@ -13,7 +15,6 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
-import lombok.NonNull;
 
 @Path("points")
 public class PointsResource {
@@ -29,10 +30,14 @@ public class PointsResource {
     @POST
     @Produces({ MediaType.APPLICATION_JSON })
     public Collision addCollision(
-        @QueryParam("x") @NonNull Float x,
-        @QueryParam("y") @NonNull Float y,
-        @QueryParam("radius") @NonNull Float graphRadius
-    ) {
+        @QueryParam("x") Float x,
+        @QueryParam("y") Float y,
+        @QueryParam("radius") Float graphRadius
+    ) throws ValidationException {
+        Validator.validateNotNull("x", x);
+        Validator.validateRange("x", x, -10f, 10f);
+        Validator.validateRange("y", y, -10f, 10f);
+        Validator.validateRange("radius", graphRadius, 0f, 10f);
         return this.service.addCollision(x, y, graphRadius);
     }
 
