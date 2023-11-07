@@ -93,6 +93,12 @@ button:focus:not(:focus-visible) {
     outline: none;
 }
 
+button {
+    background: #00000000;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+
 @media (min-width: 720px) {
     h1 {
         font-size: 2.4rem;
