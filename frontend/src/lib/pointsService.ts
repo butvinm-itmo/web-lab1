@@ -7,6 +7,8 @@ export type Collision = {
     graphRadius: number;
 };
 
+export type Result<T> = { ok: true; value: T } | { ok: false; error: string };
+
 export class PointsService {
     private endpoint = "api/points";
 
@@ -16,16 +18,20 @@ export class PointsService {
         this.apiUrl = apiUrl;
     }
 
-    async getCollisions(): Promise<Collision[] | null> {
+    async getCollisions(): Promise<Result<Collision[]>> {
         try {
             const response = await fetch(`${this.apiUrl}${this.endpoint}`);
-            return (await response.json()) as Collision[];
-        } catch {
-            return null;
+            if (response.ok) {
+                return { ok: true, value: await response.json() };
+            } else {
+                return { ok: false, error: await response.text() };
+            }
+        } catch (err) {
+            return { ok: false, error: "Cannot make request." };
         }
     }
 
-    async addPoint(point: Point, radius: number): Promise<Collision | null> {
+    async addPoint(point: Point, radius: number): Promise<Result<Collision>> {
         const queryParams = new URLSearchParams({
             x: point.x.toString(),
             y: point.y.toString(),
@@ -38,9 +44,13 @@ export class PointsService {
                     method: "POST",
                 }
             );
-            return (await response.json()) as Collision;
+            if (response.ok) {
+                return { ok: true, value: await response.json() };
+            } else {
+                return { ok: false, error: await response.text() };
+            }
         } catch {
-            return null;
+            return { ok: false, error: "Cannot make request." };
         }
     }
 }

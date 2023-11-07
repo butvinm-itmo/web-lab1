@@ -14,16 +14,26 @@
     let point: Point;
     let radius: number;
 
+    let errorMessage: string | null;
+
     async function addPoint(point: Point, radius: number) {
-        const collision = await service.addPoint(point, radius);
-        if (collision) {
-            collisions = [collision, ...collisions];
+        const res = await service.addPoint(point, radius);
+        if (res.ok) {
+            collisions = [res.value, ...collisions];
+            errorMessage = null;
+        } else {
+            errorMessage = `Cannot add point: ${res.error}`;
         }
     }
 
     async function updateCollisions() {
-        const result = await service.getCollisions();
-        collisions = result ? result : [];
+        const res = await service.getCollisions();
+        if (res.ok) {
+            collisions = res.value;
+            errorMessage = null;
+        } else {
+            errorMessage = `Cannot add point: ${res.error}`;
+        }
     }
     onMount(updateCollisions);
 </script>
@@ -38,6 +48,9 @@
     <button on:click={async () => await addPoint(point, radius)}>
         Click Me
     </button>
+    {#if errorMessage}
+        <p class="error">{errorMessage}</p>
+    {/if}
     <ResultsTable bind:collisions />
 </div>
 
@@ -46,5 +59,9 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+    }
+
+    .error {
+        color: red;
     }
 </style>
