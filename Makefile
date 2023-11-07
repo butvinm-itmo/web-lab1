@@ -1,8 +1,22 @@
 .PHONY: mvn-package docker-build docker-run
 
-mvn-package:
-	mvn clean package
+frontend-build:
+	cd frontend &&	npm run build
 
 
-docker-dev: mvn-package
+frontend-update: frontend-build
+	/bin/cp -rf frontend/build/* backend/src/main/webapp
+
+
+backend-build:
+	cd backend && mvn clean package
+
+
+full-build: frontend-update backend-build
+
+
+docker-run:
 	docker-compose up --build; rm -rf ./target
+
+
+docker-dev: full-build docker-run
